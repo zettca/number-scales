@@ -5,7 +5,7 @@ num.oninput = updatens;
 
 function updatens(e){
 	var el = e.target.value.length;
-	e.target.style.width = (2+((el>3) ? (0.6*(el-3)) : 0)) + "em";
+	e.target.style.width = 6 + ((el>10) ? (0.57*(el-10)) : 0) + "em";
 	let h, t, txt = document.getElementById("names");
 	let num = e.target.value;
 	let names = "";

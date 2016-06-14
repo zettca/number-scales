@@ -1,10 +1,4 @@
-*:focus{
-	outline: none;
-}
-
-html, body{
-	margin: 0;
-	padding: 0;
+body{
 	color: #222;
 	font-size: 14px;
 	background-color: #EEE;
@@ -16,19 +10,20 @@ section{
 }
 
 input[type=number]{ 
-    margin: 0;
-    border: 0;
-    width: 6em;
-    font-size: 2em;
-    background: transparent;
-    border-bottom: 1px solid black;
-    -moz-appearance: textfield;
-    -webkit-appearance: none;
+	border: 0;
+	width: 6em;
+	font-size: 1.6em;
+	background: transparent;
+	border-bottom: 1px solid black;
+	-moz-appearance: textfield;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-    -webkit-appearance: none;
+input:focus{
+	outline: none;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
+	-webkit-appearance: none;
 }
 
 h3{
@@ -37,6 +32,5 @@ h3{
 
 #names{
 	display: block;
-	font-size: 1.2em;
 	margin-top: 20px;
 }
