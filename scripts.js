@@ -1,20 +1,25 @@
 "use strict";
 
+let illions = [null, "Thousand", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
+let yllions = [null, "Myriad", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
+let ones = [null, "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+let tens = [null, null, "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
 var num = document.getElementById("number");
 num.oninput = updatens;
 
 function updatens(e){
 	var el = e.target.value.length;
 	e.target.style.width = 6 + ((el>10) ? (0.57*(el-10)) : 0) + "em";
-	let h, t, txt = document.getElementById("names");
-	let num = e.target.value;
-	let names = "";
 
-	txt.innerHTML = "";
-	putCoiso(txt, "Shortest Scale", num.parseShortest());
-	putCoiso(txt, "Short Scale", num.parseShort());
-	putCoiso(txt, "Long Scale", num.parseLong());
-	putCoiso(txt, "Conway Scale", num.parseConway());
+	let div = document.getElementById("names");
+	let txt = e.target.value;
+
+	div.innerHTML = "";
+	putCoiso(div, "Shortest Scale", txt.parseShortest());
+	putCoiso(div, "Short Scale", txt.parseShort());
+	putCoiso(div, "Long Scale", txt.parseLong());
+	putCoiso(div, "Conway Scale", txt.parseConway());
 }
 
 function putCoiso(el, title, text){
@@ -31,41 +36,36 @@ String.prototype.app = function(str){
 	return this + ((str && str !== "null") ? (sep + str) : "");
 };
 
-String.prototype.parseShortest = function(){
-	let num = this.toString();
+String.prototype.splitNum = function(sp){
+	let num = this;
 	let splitted = [];
-	let splitter = 3;
-	let str = "";
-
-	let illions = [null, "Thousand", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
+	sp = sp || 1;
 
 	while (num.length>0){
-		let j = (num.length-splitter >= 0) ? num.length-splitter : 0;
+		let j = (num.length-sp >= 0) ? num.length-sp : 0;
 		splitted.unshift(num.substr(j));
 		num = num.substr(0, j);
 	}
+
+	return splitted;
+};
+
+String.prototype.parseShortest = function(){
+	let splitted = this.splitNum(3);
+	let str = "";
 
 	for (let i=0; i<splitted.length; i++){
 		let j = splitted.length-i-1;
 		str = str.app(parseInt(splitted[i]));
 		if (parseInt(splitted[i]) !== 0) str = str.app(illions[j]+(j>1 ? "illion" : ""));
 	}
+
 	return str;
 };
 
 String.prototype.parseShort = function(){
-	let num = this.toString();
-	let splitted = [];
-	let splitter = 3;
+	let splitted = this.splitNum(3);
 	let str = "";
-
-	let illions = [null, "Thousand", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
-
-	while (num.length>0){
-		let j = (num.length-splitter >= 0) ? num.length-splitter : 0;
-		splitted.unshift(num.substr(j));
-		num = num.substr(0, j);
-	}
 
 	for (let i=0; i<splitted.length; i++){
 		let j = splitted.length-i-1;
@@ -76,43 +76,20 @@ String.prototype.parseShort = function(){
 };
 
 String.prototype.parseLong = function(){
-	let num = this.toString();
-	let splitted = [];
-	let splitter = 6;
+	let splitted = this.splitNum(6);
 	let str = "";
-
-	let illions = [null, "Thousand", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
-
-	let j = (num.length-splitter >= 0) ? num.length-splitter : 0;
-	splitted.unshift(num.substr(j+3)); num = num.substr(0, j+3);
-	splitted.unshift(num.substr(j)); num = num.substr(0, j);
-	while (num.length>0){
-		let j = (num.length-splitter >= 0) ? num.length-splitter : 0;
-		splitted.unshift(num.substr(j));
-		num = num.substr(0, j);
-	}
 
 	for (let i=0; i<splitted.length; i++){
 		let j = splitted.length-i-1;
 		str = str.app(nameHundreds(splitted[i]));
-		if (parseInt(splitted[i]) !== 0) str = str.app(illions[j]+(j>1 ? "illion" : ""));
+		if (parseInt(splitted[i]) !== 0 && j>=1) str = str.app(illions[j+1]+"illion");
 	}
 	return str;
 };
 
 String.prototype.parseConway = function(){
-	let num = this.toString();
-	let splitted = [];
-	let splitter = 4;
+	let splitted = this.splitNum(4);
 	let str = "";
-
-	let illions = [null, "Myriad", "M", "B", "Tr", "Quadr", "Quint", "Sext", "Sept", "Oct", "Non", "Dec", "Undec", "Duodec", "Tredec", "Quattuordec", "Quindec", "Sexdec", "Septendec", "Octodec", "Novemdec", "Vigint"];
-
-	while (num.length>0){
-		let j = (num.length-splitter >= 0) ? num.length-splitter : 0;
-		splitted.unshift(num.substr(j));
-		num = num.substr(0, j);
-	}
 
 	for (var i=0; i<splitted.length; i++){
 		let j = splitted.length-i-1;
@@ -126,9 +103,6 @@ function nameHundreds(n){
 	let num = parseInt(n);
 	let str = "";
 
-	let ones = [null, "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-	let tens = [null, null, "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
-
 	if (num>=1000){
 		str = str.app(nameHundreds(Math.floor(num/1000)));
 		str = str.app("Thousand");
@@ -141,15 +115,12 @@ function nameHundreds(n){
 		num = num % 100;
 	}
 
-	return str.app(num>=20 ? tens[Math.floor(num/10)] + ((num%10 == 0) ? "" : "-"+ones[num%10]) : ones[num]);
+	return str.app(num>=20 ? tens[Math.floor(num/10)] + ((num%10 == 0) ? "" : " "+ones[num%10]) : ones[num]);
 }
 
 function nameHundreds2(n){
 	let num = parseInt(n);
 	let str = "";
-
-	let ones = [null, "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
-	let tens = [null, null, "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
 
 	if (num>=100){
 		str = str.app(nameHundreds2(Math.floor(num/100)));
