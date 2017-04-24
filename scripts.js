@@ -19,7 +19,7 @@ function updatens(e){
 	putCoiso(div, "Shortest Scale", txt.parseShortest());
 	putCoiso(div, "Short Scale", txt.parseShort());
 	putCoiso(div, "Long Scale", txt.parseLong());
-	putCoiso(div, "Conway Scale", txt.parseConway());
+	putCoiso(div, "Knuth Scale", txt.parseKnuth());
 }
 
 function putCoiso(el, title, text){
@@ -87,7 +87,7 @@ String.prototype.parseLong = function(){
 	return str;
 };
 
-String.prototype.parseConway = function(){
+String.prototype.parseKnuth = function(){
 	let splitted = this.splitNum(4);
 	let str = "";
 
