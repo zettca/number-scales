@@ -1,37 +1,26 @@
-body{
-	color: #222;
-	font-size: 14px;
-	background-color: #EEE;
-	font-family: "Open Sans", sans-serif;
+html {
+  color-scheme: light dark;
+  font-family: "Open Sans", sans-serif;
 }
 
-section{
-	margin: 20px;
+main {
+  padding: 1rem;
 }
 
-input[type=number]{ 
-	border: 0;
-	width: 6em;
-	font-size: 1.6em;
-	background: transparent;
-	border-bottom: 1px solid black;
-	-moz-appearance: textfield;
+#number {
+  border: 0;
+  width: 6em;
+  font-size: 1.6em;
+  background: transparent;
+  border-bottom: 1px solid currentColor;
+  margin-bottom: 16px;
 }
 
-input:focus{
-	outline: none;
+input:focus {
+  outline: none;
 }
 
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button{
-	-webkit-appearance: none;
-}
-
-h3{
-	margin-bottom: 0.2em;
-}
-
-#names{
-	display: block;
-	margin-top: 20px;
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
