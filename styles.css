@@ -11,6 +11,7 @@ main {
   border: 0;
   width: 6em;
   font-size: 1.6em;
+  max-width: 90vw;
   background: transparent;
   border-bottom: 1px solid currentColor;
   margin-bottom: 16px;

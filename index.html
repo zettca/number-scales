@@ -9,14 +9,33 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
     <link rel="stylesheet" href="styles.css" />
-    <script defer src="scripts.js"></script>
+    <script type="module">
+      import ntoa from "https://esm.sh/gh/zettca/ntoa/mod.ts";
+
+      number.oninput = (evt) => {
+        const { value, style } = evt.target;
+        const len = value.length;
+
+        style.width = 6 + (len > 10 ? 0.57 * (len - 10) : 0) + "em";
+
+        names.style.visibility = len > 0 ? "visible" : "hidden";
+
+        scaleShort.innerText = ntoa(value, { scale: "short" });
+        scaleLong.innerText = ntoa(value, { scale: "long" });
+      };
+    </script>
   </head>
 
   <body>
     <main>
       <h1>Number Scales</h1>
-      <input id="number" type="number" placeholder="2147483647" />
-      <div id="names"></div>
+      <input id="number" autofocus type="number" placeholder="2147483647" />
+      <div id="names">
+        <h2>Short Scale</h2>
+        <span id="scaleShort"></span>
+        <h2>Long Scale</h2>
+        <span id="scaleLong"></span>
+      </div>
     </main>
   </body>
 </html>
