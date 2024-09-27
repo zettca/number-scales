@@ -4,31 +4,49 @@
     <title>Number Naming</title>
     <meta charset="UTF-8" content="text/html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Type a number and check its many names..." />
-    <meta name="keywords" content="Git GitHub Number System Systems Scale Short Long Conway zettca" />
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
-    <link rel="stylesheet" href="styles.css" />
+    <meta name="description" content="Type a number and check its many names" />
+    <meta name="keywords" content="Number Names Scale Short Long" />
+    <link rel="stylesheet" href="./styles.css" />
     <script type="module">
-      import ntoa from "https://esm.sh/gh/zettca/ntoa/mod.ts";
+      import { ntoa } from "https://esm.sh/gh/zettca/ntoa/mod.ts";
 
-      number.oninput = (evt) => {
-        const { value, style } = evt.target;
+      globalThis.ntoa = ntoa;
+
+      function updateValues() {
+        const { value } = number;
         const len = value.length;
+        const lang = settings.lang.value;
+        const verbose = settings.verbose.checked;
 
-        style.width = 6 + (len > 10 ? 0.57 * (len - 10) : 0) + "em";
-
+        number.style.width = `${len + 1}ch`;
+        number.style.fontSize = len > 120 ? "1.4rem" : undefined;
         names.style.visibility = len > 0 ? "visible" : "hidden";
 
-        scaleShort.innerText = ntoa(value, { scale: "short" });
-        scaleLong.innerText = ntoa(value, { scale: "long" });
-      };
+        scaleShort.innerText = ntoa(value, { scale: "short", lang, verbose });
+        scaleLong.innerText = ntoa(value, { scale: "long", lang, verbose });
+      }
+
+      updateValues();
+
+      settings.addEventListener("change", updateValues);
+      number.addEventListener("input", updateValues);
     </script>
   </head>
 
   <body>
-    <main>
+    <header>
       <h1>Number Scales</h1>
+      <form id="settings">
+        <input id="verbose" type="checkbox" aria-label="verbose mode" />
+        <select id="lang" name="lang">
+          <option value="en">🇬🇧</option>
+          <option value="fr">🇫🇷</option>
+          <option value="pt">🇵🇹</option>
+        </select>
+      </form>
+    </header>
+
+    <main>
       <input id="number" autofocus type="number" placeholder="2147483647" />
       <div id="names">
         <h2>Short Scale</h2>

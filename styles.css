@@ -1,24 +1,48 @@
 html {
   color-scheme: light dark;
-  font-family: "Open Sans", sans-serif;
+  font-family: Tahoma, Geneva, sans-serif;
 }
 
-main {
-  padding: 1rem;
+body {
+  margin: 0;
+  padding: 1rem 2rem;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  & h1 {
+    flex: 1;
+  }
+
+  & form {
+    display: flex;
+    gap: 1rem;
+  }
+}
+
+input,
+select,
+textarea {
+  border: 0;
+  font-size: 1.6rem;
+  background-color: transparent;
 }
 
 #number {
-  border: 0;
   width: 6em;
-  font-size: 1.6em;
-  max-width: 90vw;
-  background: transparent;
+  min-width: 10ch;
+  max-width: 100%;
   border-bottom: 1px solid currentColor;
   margin-bottom: 16px;
-}
 
-input:focus {
-  outline: none;
+  resize: vertical;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 input::-webkit-outer-spin-button,
