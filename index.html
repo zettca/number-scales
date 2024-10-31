@@ -48,7 +48,14 @@
     </header>
 
     <main>
-      <input id="number" autofocus type="number" placeholder="2147483647" />
+      <input
+        id="number"
+        autofocus
+        type="text"
+        pattern="[0-9]*"
+        inputmode="numeric"
+        placeholder="2147483647"
+      />
       <div id="names">
         <h2>Short Scale</h2>
         <span id="scaleShort"></span>
